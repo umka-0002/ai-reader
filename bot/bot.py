@@ -8,6 +8,8 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.client.default import DefaultBotProperties
 from aiogram.filters import Command
 from core.ocr import recognize_text
+import logging
+from core.pipeline import process_card
 
 API_TOKEN = os.getenv("BOT_TOKEN")  # Use environment variable!
 
@@ -23,6 +25,7 @@ os.makedirs(IMAGE_DIR, exist_ok=True)
 @dp.message(Command("start"))
 async def cmd_start(message: Message):
     await message.answer("👋 Привет! Отправьте фото карточки, и я распознаю текст.")
+
 
 @dp.message()
 async def handle_message(message: Message):
@@ -43,20 +46,17 @@ async def handle_message(message: Message):
 
     loop = asyncio.get_running_loop()
     try:
-        text = await loop.run_in_executor(None, recognize_text, img_path)
+        # Интеграция полного pipeline!
+        result = await loop.run_in_executor(None, process_card, img_path)
     except Exception as e:
-        await message.answer(f"❗ Ошибка при распознавании: {e}")
+        logging.exception("Ошибка при обработке pipeline")
+        await message.answer(f"❗ Ошибка при обработке карточки: {e}")
         return
 
-    txt_filename = img_filename.replace('.jpg', '.txt')
-    txt_path = os.path.join(IMAGE_DIR, txt_filename)
-    with open(txt_path, "w", encoding="utf-8") as txt_file:
-        txt_file.write(text)
-
-    if text.strip():
-        await message.answer("📝 Распознанный текст:\n\n" + text, parse_mode=None)
+    if result.strip():
+        await message.answer("📄 Итоговая карточка:\n\n" + result, parse_mode=None)
     else:
-        await message.answer("❗ Не удалось распознать текст. Попробуйте отправить фото чётче.")
+        await message.answer("❗ Не удалось распознать и структурировать карточку. Попробуйте отправить фото чётче.")
 
 async def main():
     await dp.start_polling(bot)
