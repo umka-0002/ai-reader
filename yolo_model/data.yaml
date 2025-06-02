@@ -1,0 +1,6 @@
+path: ../data/labeled
+train: images/train
+val: images/val
+
+nc: 4
+names: ['author', 'title', 'year', 'code']

@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.log
+venv/
+.env
+
+# VSCode, JetBrains
+.vscode/
+.idea/
+.DS_Store
+
+# Data & Models
+data/raw/
+data/labeled/
+data/processed/
+data/results/
+export/
+logs/
+models/
+*.pt
+*.jpg
+*.png
+
