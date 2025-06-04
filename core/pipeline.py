@@ -3,6 +3,7 @@ from core.ocr import recognize_text
 from core.postprocess import clean_text
 from core.ai_corrector import correct_text
 from core.utils import ensure_dir
+import cv2
 import os
 
 def process_card(image_path, output_base_dir="data/results"):

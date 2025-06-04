@@ -10,6 +10,9 @@ from aiogram.filters import Command
 from core.ocr import recognize_text
 import logging
 from core.pipeline import process_card
+from dotenv import load_dotenv
+load_dotenv()
+
 
 API_TOKEN = os.getenv("BOT_TOKEN")  # Use environment variable!
 
