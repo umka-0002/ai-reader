@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Загрузка карточки</title>
+</head>
+<body>
+    <h2>Загрузите карточку</h2>
+    <form action="/upload" enctype="multipart/form-data" method="post">
+        <input type="file" name="file" accept="image/*" required>
+        <button type="submit">Отправить</button>
+    </form>
+    {% if filename %}
+        <h3>Загруженное изображение:</h3>
+        <img src="/static/uploads/{{ filename }}" width="200">
+    {% endif %}
+    {% if result %}
+        <h3>Результат:</h3>
+        <pre>{{ result }}</pre>
+    {% endif %}
+    <a href="/history">История</a> | <a href="/search">Поиск</a>
+</body>
+</html>

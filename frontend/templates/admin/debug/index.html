@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Отладка OCR</title>
+</head>
+<body>
+    <h2>Отладка карточки {{ card.id }}</h2>
+    <img src="{{ card.image_path }}" width="200"><br>
+    <b>Текст после OCR:</b>
+    <pre>{{ card.text }}</pre>
+    <!-- Добавь сравнение "до/после" если есть -->
+    <a href="/admin/cards">Назад</a>
+</body>
+</html>

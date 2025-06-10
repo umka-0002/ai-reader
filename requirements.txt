@@ -2,3 +2,11 @@ aiogram==3.4.1
 pytesseract
 pillow
 ultralytics
+fastapi
+uvicorn
+jinja2
+python-multipart
+itsdangerous
+authlib
+httpx
+python-dotenv

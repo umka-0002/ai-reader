@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>История отправок</title>
+</head>
+<body>
+    <h2>Ваша история</h2>
+    <ul>
+    {% for card in cards %}
+        <li>
+            <a href="/cards/{{ card.id }}">{{ card.text[:60] }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+    <a href="/">На главную</a>
+</body>
+</html>

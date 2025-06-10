@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Поиск карточек</title>
+</head>
+<body>
+    <h2>Поиск карточек</h2>
+    <form method="get">
+        <input type="text" name="q" value="{{ q }}" placeholder="Поиск...">
+        <button type="submit">Поиск</button>
+    </form>
+    <ul>
+    {% for card in cards %}
+        <li>
+            <a href="/cards/{{ card.id }}">{{ card.text[:60] }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+    <a href="/">На главную</a>
+</body>
+</html>

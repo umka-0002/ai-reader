@@ -9,7 +9,7 @@ def correct_text(text):
     endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
     api_key = os.getenv("AZURE_OPENAI_API_KEY")
     deployment = os.getenv("AZURE_OPENAI_DEPLOYMENT_NAME")
-    api_version = os.getenv("AZURE_OPENAI_API_VERSION", "2024-02-15-preview")  # подбери актуальный из Azure Portal
+    api_version = os.getenv("AZURE_OPENAI_API_VERSION", "2024-11-20")  # подбери актуальный из Azure Portal
 
     client = AzureOpenAI(
         api_key=api_key,

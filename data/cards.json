@@ -1,0 +1,50 @@
+[
+  {
+    "id": "4ca53ea2-3ba5-4f4b-aac3-311a9289b2ed",
+    "image_path": "/static/uploads/4ca53ea2-3ba5-4f4b-aac3-311a9289b2ed_2025-04-14 (1).png",
+    "text": "Тут будет результат AI/OCR",
+    "status": "new"
+  },
+  {
+    "id": "b6ed3231-b14f-415d-bf32-11e7aad1e0c1",
+    "image_path": "/static/uploads/b6ed3231-b14f-415d-bf32-11e7aad1e0c1_2025-04-14 (5).png",
+    "text": "Ошибка AI-коррекции: Error code: 404 - {'error': {'code': '404', 'message': 'Resource not found'}}",
+    "status": "new"
+  },
+  {
+    "id": "28758c4f-ea65-4c35-a193-887beb3252e6",
+    "image_path": "/static/uploads/28758c4f-ea65-4c35-a193-887beb3252e6_2025-04-14 (1).png",
+    "text": "Ошибка AI-коррекции: Error code: 404 - {'error': {'code': '404', 'message': 'Resource not found'}}",
+    "status": "new"
+  },
+  {
+    "id": "34851403-000f-4116-97fa-ca1772c9ba2f",
+    "image_path": "/static/uploads/34851403-000f-4116-97fa-ca1772c9ba2f_2025-04-14 (5).png",
+    "text": "Ошибка AI-коррекции: Error code: 404 - {'error': {'code': '404', 'message': 'Resource not found'}}",
+    "status": "new"
+  },
+  {
+    "id": "5bc2a8ff-91fe-4fd7-9ddb-156f5c72b36c",
+    "image_path": "/static/uploads/5bc2a8ff-91fe-4fd7-9ddb-156f5c72b36c_2025-04-14 (6).png",
+    "text": "Ошибка AI-коррекции: Error code: 404 - {'error': {'code': '404', 'message': 'Resource not found'}}",
+    "status": "new"
+  },
+  {
+    "id": "aec3c527-bda4-4987-a82b-5ab2ca5bec3a",
+    "image_path": "/static/uploads/aec3c527-bda4-4987-a82b-5ab2ca5bec3a_2025-04-14 (6).png",
+    "text": "Ошибка AI-коррекции: Error code: 404 - {'error': {'code': '404', 'message': 'Resource not found'}}",
+    "status": "new"
+  },
+  {
+    "id": "e9218766-c9f3-497a-a7d8-fa75e65ef4a8",
+    "image_path": "/static/uploads/e9218766-c9f3-497a-a7d8-fa75e65ef4a8_2025-04-14 (8).png",
+    "text": "Ошибка AI-коррекции: Error code: 404 - {'error': {'code': '404', 'message': 'Resource not found'}}",
+    "status": "new"
+  },
+  {
+    "id": "dd91f490-8d4d-448b-9285-7ddc298fbe35",
+    "image_path": "/static/uploads/dd91f490-8d4d-448b-9285-7ddc298fbe35_2025-04-14 (8).png",
+    "text": "Ошибка AI-коррекции: Error code: 404 - {'error': {'code': '404', 'message': 'Resource not found'}}",
+    "status": "new"
+  }
+]

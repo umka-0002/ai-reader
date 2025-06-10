@@ -1,89 +1,12 @@
 <!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>AI Reader — Загрузка карточки</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background: #f7fafd;
-            min-height: 100vh;
-        }
-        .preview-img {
-            max-width: 100%;
-            max-height: 320px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-            margin-bottom: 1rem;
-        }
-        .result-block {
-            background: #fff;
-            border-radius: 12px;
-            padding: 24px;
-            box-shadow: 0 2px 16px rgba(0,0,0,0.07);
-        }
-        .ai-title {
-            font-weight: 600;
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-        }
-        .footer {
-            text-align: center;
-            color: #aaa;
-            margin-top: 2rem;
-            font-size: .95rem;
-        }
-    </style>
-</head>
+<html>
+<head><title>Главная</title></head>
 <body>
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-6 col-md-8">
-            <h1 class="mb-4 text-center">AI Reader <span style="font-size:.6em;color:#6c757d;">OCR-карточки</span></h1>
-            <form action="/upload" enctype="multipart/form-data" method="post" class="mb-4 card p-4 shadow-sm">
-                <div class="mb-2">
-                    <label for="file" class="form-label">Выберите изображение карточки (JPG/PNG):</label>
-                    <input type="file" class="form-control" id="file" name="file" accept="image/*" required onchange="showPreview(event)">
-                </div>
-                <button type="submit" class="btn btn-primary w-100">Отправить</button>
-            </form>
-
-            <div id="preview-block" class="mb-4 text-center" style="display:none;">
-                <img id="preview-img" class="preview-img" src="#" alt="Превью изображения">
-            </div>
-
-            {% if filename %}
-            <div class="text-center mb-4">
-                <span class="fw-bold">Загружено:</span>
-                <img class="preview-img" src="{{ url_for('static', path='uploads/' + filename) }}" alt="Загруженное изображение">
-            </div>
-            {% endif %}
-
-            {% if result %}
-            <div class="result-block mt-3 mb-3">
-                <div class="ai-title">📄 Итоговая карточка:</div>
-                <pre style="white-space:pre-wrap;word-break:break-word;">{{ result }}</pre>
-            </div>
-            {% endif %}
-        </div>
-    </div>
-    <div class="footer">2025 &copy; AI Reader Bot • <a href="https://github.com/umka-0002/ai-reader" target="_blank">GitHub</a></div>
-</div>
-<script>
-function showPreview(event) {
-    let preview = document.getElementById('preview-img');
-    let block = document.getElementById('preview-block');
-    if(event.target.files && event.target.files[0]){
-        let reader = new FileReader();
-        reader.onload = function(e){
-            preview.src = e.target.result;
-            block.style.display = 'block';
-        }
-        reader.readAsDataURL(event.target.files[0]);
-    } else {
-        block.style.display = 'none';
-    }
-}
-</script>
+    <h2>Главная страница</h2>
+    {% if user_email %}
+        <p>Вы вошли как: {{ user_email }}</p>
+    {% else %}
+        <a href="/login">Войти</a>
+    {% endif %}
 </body>
 </html>

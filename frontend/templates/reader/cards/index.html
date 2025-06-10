@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Карточка</title>
+</head>
+<body>
+    <h2>Карточка {{ card.id }}</h2>
+    <img src="{{ card.image_path }}" width="200"><br>
+    <pre>{{ card.text }}</pre>
+    <a href="/download/{{ card.id }}">Скачать TXT</a> | <a href="/">На главную</a>
+</body>
+</html>

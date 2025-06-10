@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head><title>Временный вход</title></head>
+<body>
+    <h2>Вход по временному паролю</h2>
+    <form method="post">
+        <input name="email" placeholder="Email" required>
+        <input name="password" placeholder="Временный пароль" required>
+        <button type="submit">Войти</button>
+        {% if error %}<div style="color:red">{{ error }}</div>{% endif %}
+    </form>
+</body>
+</html>
