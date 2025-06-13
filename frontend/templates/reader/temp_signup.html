@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Регистрация</title>
+</head>
+<body>
+    <h2>Регистрация</h2>
+    <p style="color: red;">DEBUG VERSION</p>
+    <form method="post" autocomplete="off">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <input name="username" placeholder="Логин" required>
+        <input type="password" name="password" placeholder="Пароль" required>
+        <button type="submit">Зарегистрироваться</button>
+        {% if error %}<div style="color:red">{{ error }}</div>{% endif %}
+    </form>
+    <a href="/login">Уже есть аккаунт?</a>
+</body>
+</html>

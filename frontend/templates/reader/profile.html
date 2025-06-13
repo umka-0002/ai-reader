@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}Профиль пользователя{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <!-- Профиль пользователя -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">{{ request.session.get("user") }}</h4>
+                    <div class="d-grid gap-2">
+                        <a href="/settings" class="btn btn-outline-primary">
+                            <i class="bi bi-gear"></i> Настройки
+                        </a>
+                        {% if request.session.get("admin") %}
+                        <a href="/admin" class="btn btn-outline-success">
+                            <i class="bi bi-shield-lock"></i> Панель администратора
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Статистика -->
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card bg-primary text-white">
+                        <div class="card-body">
+                            <h5 class="card-title">Всего карточек</h5>
+                            <p class="card-text display-4">{{ stats.total_cards }}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="card bg-success text-white">
+                        <div class="card-body">
+                            <h5 class="card-title">Проверенные</h5>
+                            <p class="card-text display-4">{{ stats.validated_cards }}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="card bg-warning text-white">
+                        <div class="card-body">
+                            <h5 class="card-title">Ожидают проверки</h5>
+                            <p class="card-text display-4">{{ stats.pending_cards }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Последние действия -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Последние действия</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        {% for card in recent_cards %}
+                        <a href="/cards/{{ card.id }}" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">{{ card.processed_text[:50] }}...</h6>
+                                <small>{{ card.created_at }}</small>
+                            </div>
+                            <small class="text-muted">
+                                Статус: 
+                                {% if card.status == "validated" %}
+                                <span class="badge bg-success">Проверено</span>
+                                {% elif card.status == "new" %}
+                                <span class="badge bg-warning">Новое</span>
+                                {% else %}
+                                <span class="badge bg-secondary">{{ card.status }}</span>
+                                {% endif %}
+                            </small>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        border: none;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: transform 0.2s;
+    }
+    
+    .card:hover {
+        transform: translateY(-2px);
+    }
+    
+    .display-4 {
+        font-size: 2.5rem;
+        font-weight: 300;
+    }
+    
+    .btn {
+        padding: 0.8rem 1.5rem;
+    }
+    
+    .list-group-item {
+        border: none;
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+    
+    .list-group-item:last-child {
+        border-bottom: none;
+    }
+    
+    .badge {
+        font-weight: 500;
+        padding: 0.5em 0.8em;
+    }
+</style>
+{% endblock %} 

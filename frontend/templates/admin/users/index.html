@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Пользователи</title>
+    <style>
+        table { border-collapse: collapse; }
+        th, td { border: 1px solid #ccc; padding: 4px 8px; }
+        .ok { color: green; }
+        .wait { color: orange; }
+    </style>
+</head>
+<body>
+    <h2>Пользователи</h2>
+    <table>
+        <tr><th>Логин</th><th>Одобрен</th><th>Админ</th><th>Действия</th></tr>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.username }}</td>
+            <td>{% if user.is_approved %}<span class="ok">✔</span>{% else %}<span class="wait">⏳</span>{% endif %}</td>
+            <td>{% if user.is_admin %}<span class="ok">✔</span>{% else %}—{% endif %}</td>
+            <td>
+                {% if not user.is_approved %}
+                <form method="post" action="/admin/users/{{ user.id }}/approve" style="display:inline;">
+                    <button type="submit">Одобрить</button>
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="/admin/cards">К карточкам</a>
+</body>
+</html>

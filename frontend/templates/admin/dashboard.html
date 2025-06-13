@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block title %}Панель управления{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Панель управления</h1>
+    
+    <div class="row">
+        <!-- Статистика -->
+        <div class="col-md-3 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Всего карточек</h5>
+                    <p class="card-text display-4">{{ stats.total_cards }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Пользователей</h5>
+                    <p class="card-text display-4">{{ stats.total_users }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Новые карточки</h5>
+                    <p class="card-text display-4">{{ stats.new_cards }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Ожидают проверки</h5>
+                    <p class="card-text display-4">{{ stats.pending_users }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Быстрые действия -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Быстрые действия</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex gap-2">
+                        <a href="/admin/cards" class="btn btn-primary">Управление карточками</a>
+                        <a href="/admin/users" class="btn btn-secondary">Управление пользователями</a>
+                        <a href="/admin/logs" class="btn btn-info">Просмотр логов</a>
+                        <a href="/admin/export" class="btn btn-success">Экспорт данных</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Последние действия -->
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Последние карточки</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        {% for card in recent_cards %}
+                        <a href="/admin/cards/{{ card.id }}" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">{{ card.processed_text[:50] }}...</h6>
+                                <small>{{ card.created_at }}</small>
+                            </div>
+                            <small>Автор: {{ card.created_by }}</small>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Последние пользователи</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        {% for user in recent_users %}
+                        <a href="/admin/users/{{ user.username }}" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">{{ user.username }}</h6>
+                                <small>{{ user.created_at }}</small>
+                            </div>
+                            <small>Статус: {{ "Одобрен" if user.is_approved else "Ожидает" }}</small>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

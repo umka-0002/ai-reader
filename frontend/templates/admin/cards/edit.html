@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Редактирование карточки</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .card-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .image-section {
+            text-align: center;
+        }
+        .image-section img {
+            max-width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .text-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        label {
+            font-weight: bold;
+            color: #666;
+        }
+        textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        .fields-section {
+            margin-top: 20px;
+        }
+        .field {
+            margin-bottom: 10px;
+        }
+        .field label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .field input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            color: white;
+        }
+        .btn-save {
+            background-color: #28a745;
+        }
+        .btn-cancel {
+            background-color: #6c757d;
+        }
+        .actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        .validation-errors {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            border-radius: 4px;
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Редактирование карточки</h1>
+        
+        <div class="card-container">
+            <div class="image-section">
+                <img src="{{ card.image_path }}" alt="Card image">
+            </div>
+            
+            <div class="text-section">
+                <form method="post" action="/admin/cards/{{ card.id }}/edit">
+                    <div class="form-group">
+                        <label for="original_text">Оригинальный текст:</label>
+                        <textarea id="original_text" readonly>{{ card.original_text }}</textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="processed_text">Обработанный текст:</label>
+                        <textarea id="processed_text" name="processed_text">{{ card.processed_text }}</textarea>
+                    </div>
+                    
+                    <div class="fields-section">
+                        <h3>Поля</h3>
+                        {% for field_name, field_value in card.fields.items() %}
+                        <div class="field">
+                            <label for="{{ field_name }}">{{ field_name }}:</label>
+                            <input type="text" id="{{ field_name }}" name="fields[{{ field_name }}]" value="{{ field_value }}">
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                    {% if card.validation_errors %}
+                    <div class="validation-errors">
+                        <h4>Ошибки валидации:</h4>
+                        <ul>
+                            {% for error in card.validation_errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="actions">
+                        <button type="submit" class="btn btn-save">Сохранить</button>
+                        <a href="/admin/cards" class="btn btn-cancel">Отмена</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

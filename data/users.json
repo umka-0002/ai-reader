@@ -1,0 +1,15 @@
+[
+  {
+    "id": "uuid",
+    "username": "test1",
+    "password": "hashed_password",
+    "is_approved": false,
+    "is_admin": false
+  },
+  {
+    "id": "7568de61-fc70-4b0b-9fed-9b442c49b296",
+    "username": "пншгло",
+    "password": "нпарло",
+    "is_approved": true
+  }
+]

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Админ панель - Настройки</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #2ecc71;
+            --warning-color: #f1c40f;
+            --text-color: #2c3e50;
+            --light-gray: #f5f6fa;
+            --border-color: #dcdde1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-gray);
+        }
+
+        .admin-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 1rem;
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 1rem;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+
+        .settings-section {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .settings-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-left: 1rem;
+        }
+
+        .status-active {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .status-inactive {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .help-text {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .admin-layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Админ панель</h2>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="/admin/cards" class="nav-link">Карточки</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/admin/users" class="nav-link">Пользователи</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/admin/settings" class="nav-link active">Настройки</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/" class="nav-link">На главную</a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="header">
+                <h1 class="page-title">Настройки системы</h1>
+            </div>
+
+            <form action="/admin/settings/integrations" method="POST">
+                <div class="settings-section">
+                    <h2>Интеграции</h2>
+                    
+                    <div class="form-group">
+                        <label for="ocr_api_key">OCR API Key</label>
+                        <input type="password" id="ocr_api_key" name="ocr_api_key" 
+                               value="{{ integrations.ocr or '' }}" placeholder="Введите API ключ">
+                        <div class="help-text">API ключ для сервиса распознавания текста</div>
+                        {% if integrations.ocr %}
+                        <span class="status-badge status-active">Активно</span>
+                        {% else %}
+                        <span class="status-badge status-inactive">Не настроено</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="library_api_key">Library System API Key</label>
+                        <input type="password" id="library_api_key" name="library_api_key" 
+                               value="{{ integrations.library or '' }}" placeholder="Введите API ключ">
+                        <div class="help-text">API ключ для интеграции с библиотечной системой</div>
+                        {% if integrations.library %}
+                        <span class="status-badge status-active">Активно</span>
+                        {% else %}
+                        <span class="status-badge status-inactive">Не настроено</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="notifications_api_key">Notifications API Key</label>
+                        <input type="password" id="notifications_api_key" name="notifications_api_key" 
+                               value="{{ integrations.notifications or '' }}" placeholder="Введите API ключ">
+                        <div class="help-text">API ключ для сервиса уведомлений</div>
+                        {% if integrations.notifications %}
+                        <span class="status-badge status-active">Активно</span>
+                        {% else %}
+                        <span class="status-badge status-inactive">Не настроено</span>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Сохранить настройки</button>
+                </div>
+            </form>
+        </main>
+    </div>
+</body>
+</html> 

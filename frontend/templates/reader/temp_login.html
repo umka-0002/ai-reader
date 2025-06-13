@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Вход</title>
+</head>
+<body>
+    <h2>Вход</h2>
+    <form method="post" autocomplete="off" >
+        <input name="username" placeholder="Логин" required>
+        <input type="password" name="password" placeholder="Пароль" required>
+        <button type="submit">Войти</button>
+        {% if error %}<div style="color:red">{{ error }}</div>{% endif %}
+    </form>
+    <a href="/signup">Создать аккаунт</a>
+</body>
+</html>
+
+<!-- reader/temp_login.html -->

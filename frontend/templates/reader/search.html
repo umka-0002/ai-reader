@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Поиск карточек</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #2ecc71;
+            --warning-color: #f1c40f;
+            --text-color: #2c3e50;
+            --light-gray: #f5f6fa;
+            --border-color: #dcdde1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-gray);
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+
+        .search-container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+        }
+
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .filter-select {
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: white;
+            min-width: 150px;
+        }
+
+        .date-range {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .date-input {
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: white;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-secondary {
+            background-color: white;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--light-gray);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .card-text {
+            color: #666;
+            margin-bottom: 1rem;
+            max-height: 100px;
+            overflow-y: auto;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-top: 1px solid var(--border-color);
+            background-color: var(--light-gray);
+        }
+
+        .card-date {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .card-status {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .status-new {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .status-validated {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .status-error {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .pagination-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .pagination-btn:hover {
+            background-color: var(--light-gray);
+        }
+
+        .pagination-btn.active {
+            background-color: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+        }
+
+        .view-options {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .view-option {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .view-option.active {
+            background-color: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+
+        @media (max-width: 768px) {
+            .search-form {
+                flex-direction: column;
+            }
+
+            .filters {
+                flex-direction: column;
+            }
+
+            .date-range {
+                flex-direction: column;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="page-title">Поиск карточек</h1>
+            <a href="/upload" class="btn btn-primary">Загрузить карточку</a>
+        </div>
+
+        <div class="search-container">
+            <form action="/search" method="GET" class="search-form">
+                <input type="text" name="q" class="search-input" 
+                       placeholder="Поиск по тексту карточки..." 
+                       value="{{ request.query_params.get('q', '') }}">
+                
+                <div class="filters">
+                    <select name="status" class="filter-select">
+                        <option value="">Все статусы</option>
+                        <option value="new" {% if request.query_params.get('status') == 'new' %}selected{% endif %}>Новые</option>
+                        <option value="validated" {% if request.query_params.get('status') == 'validated' %}selected{% endif %}>Проверенные</option>
+                        <option value="error" {% if request.query_params.get('status') == 'error' %}selected{% endif %}>С ошибками</option>
+                    </select>
+
+                    <div class="date-range">
+                        <input type="date" name="date_from" class="date-input" 
+                               value="{{ request.query_params.get('date_from', '') }}"
+                               placeholder="От">
+                        <input type="date" name="date_to" class="date-input" 
+                               value="{{ request.query_params.get('date_to', '') }}"
+                               placeholder="До">
+                    </div>
+
+                    <select name="sort" class="filter-select">
+                        <option value="newest" {% if request.query_params.get('sort') == 'newest' %}selected{% endif %}>Сначала новые</option>
+                        <option value="oldest" {% if request.query_params.get('sort') == 'oldest' %}selected{% endif %}>Сначала старые</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Поиск</button>
+            </form>
+        </div>
+
+        <div class="view-options">
+            <div class="view-option active" data-view="grid">Сетка</div>
+            <div class="view-option" data-view="list">Список</div>
+        </div>
+
+        {% if cards %}
+        <div class="cards-grid">
+            {% for card in cards %}
+            <div class="card">
+                <img src="{{ card.image_path }}" alt="Card image" class="card-image">
+                <div class="card-content">
+                    <h3 class="card-title">Карточка #{{ card.id[:8] }}</h3>
+                    <div class="card-text">{{ card.processed_text }}</div>
+                    <div class="card-meta">
+                        <span class="card-date">
+                            Создано: {{ card.created_at.split('T')[0] }} {{ card.created_at.split('T')[1].split('.')[0] }}
+                        </span>
+                        <span class="card-status status-{{ card.status }}">
+                            {{ card.status }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if total_pages > 1 %}
+        <div class="pagination">
+            {% if page > 1 %}
+            <a href="?page={{ page-1 }}&q={{ request.query_params.get('q', '') }}&status={{ request.query_params.get('status', '') }}&date_from={{ request.query_params.get('date_from', '') }}&date_to={{ request.query_params.get('date_to', '') }}&sort={{ request.query_params.get('sort', '') }}" 
+               class="pagination-btn">Предыдущая</a>
+            {% endif %}
+            
+            <span class="pagination-btn active">{{ page }}</span>
+            
+            {% if has_next %}
+            <a href="?page={{ page+1 }}&q={{ request.query_params.get('q', '') }}&status={{ request.query_params.get('status', '') }}&date_from={{ request.query_params.get('date_from', '') }}&date_to={{ request.query_params.get('date_to', '') }}&sort={{ request.query_params.get('sort', '') }}" 
+               class="pagination-btn">Следующая</a>
+            {% endif %}
+        </div>
+        {% endif %}
+        {% else %}
+        <div class="no-results">
+            <p>Карточки не найдены</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        // View switching
+        document.querySelectorAll('.view-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.view-option').forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
+                
+                const view = option.dataset.view;
+                const cardsGrid = document.querySelector('.cards-grid');
+                
+                if (view === 'list') {
+                    cardsGrid.style.gridTemplateColumns = '1fr';
+                } else {
+                    cardsGrid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(300px, 1fr))';
+                }
+            });
+        });
+
+        // Date range validation
+        const dateFrom = document.querySelector('input[name="date_from"]');
+        const dateTo = document.querySelector('input[name="date_to"]');
+
+        dateFrom.addEventListener('change', () => {
+            if (dateTo.value && dateFrom.value > dateTo.value) {
+                dateTo.value = dateFrom.value;
+            }
+        });
+
+        dateTo.addEventListener('change', () => {
+            if (dateFrom.value && dateTo.value < dateFrom.value) {
+                dateFrom.value = dateTo.value;
+            }
+        });
+    </script>
+</body>
+</html> 
