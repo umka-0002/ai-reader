@@ -326,8 +326,9 @@
         {% if cards %}
         <div class="cards-grid">
             {% for card in cards %}
+            {% set card_image_base64 = card.card_image_base64 if card.card_image_base64 is defined else '' %}
             <div class="card">
-                <img src="{{ card.image_path }}" alt="Card image" class="card-image">
+                <img src="data:{{ card.image_mime }};base64,{{ card_image_base64 }}" alt="Card image" class="card-image">
                 <div class="card-content">
                     <h3 class="card-title">Карточка #{{ card.id[:8] }}</h3>
                     <div class="card-text">{{ card.processed_text }}</div>

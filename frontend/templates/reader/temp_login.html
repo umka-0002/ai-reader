@@ -1,17 +1,103 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <title>Вход</title>
+    <meta charset="UTF-8">
+    <title>Вход в систему</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background: #f4f6f8;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .login-container {
+            max-width: 380px;
+            margin: 60px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            padding: 32px 28px;
+        }
+        h2 {
+            text-align: center;
+            color: #222;
+            margin-bottom: 28px;
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: #555;
+        }
+        input[type="email"], input[type="password"] {
+            width: 93%;
+            padding: 10px 12px;
+            border: 1px solid #e0e6ed;
+            border-radius: 6px;
+            font-size: 1em;
+            background: #f9fafb;
+            transition: border 0.2s;
+        }
+        input[type="email"]:focus, input[type="password"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        .error {
+            color: #dc3545;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .signup-link {
+            display: block;
+            text-align: center;
+            margin-top: 18px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .signup-link:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 500px) {
+            .login-container {
+                padding: 18px 6px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h2>Вход</h2>
-    <form method="post" autocomplete="off" >
-        <input name="username" placeholder="Логин" required>
-        <input type="password" name="password" placeholder="Пароль" required>
-        <button type="submit">Войти</button>
-        {% if error %}<div style="color:red">{{ error }}</div>{% endif %}
-    </form>
-    <a href="/signup">Создать аккаунт</a>
+    <div class="login-container">
+        <h2>Вход</h2>
+        <form method="post" autocomplete="off">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="Введите email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Пароль</label>
+                <input id="password" name="password" type="password" placeholder="Введите пароль" required>
+            </div>
+            <button class="btn" type="submit">Войти</button>
+            {% if error %}<div class="error">{{ error }}</div>{% endif %}
+        </form>
+        <a class="signup-link" href="/signup">Создать аккаунт</a>
+    </div>
 </body>
 </html>
 

@@ -330,13 +330,18 @@
             <div class="cards-grid">
                 {% for card in cards %}
                 <div class="card">
-                    <img src="{{ card.image_path }}" alt="Card image" class="card-image">
+                    <img src="data:{{ card.image_mime }};base64,{{ card.card_image_base64 }}" alt="Card image" class="card-image">
                     <div class="card-content">
                         <h3 class="card-title">Карточка #{{ card.id[:8] }}</h3>
-                        <div class="status-badge status-{{ card.status }}">
-                            {{ card.status }}
+                        <div class="card-text">{{ card.processed_text }}</div>
+                        <div class="card-meta">
+                            <span class="card-date">
+                                Создано: {{ card.created_at.split('T')[0] }} {{ card.created_at.split('T')[1].split('.')[0] }}
+                            </span>
+                            <span class="card-status status-{{ card.status }}">
+                                {{ card.status }}
+                            </span>
                         </div>
-                        <p class="card-text">{{ card.processed_text }}</p>
                     </div>
                     <div class="card-actions">
                         <a href="/admin/cards/{{ card.id }}/edit" class="btn btn-primary">Редактировать</a>

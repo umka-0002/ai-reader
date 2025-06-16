@@ -123,7 +123,7 @@
                     
                     <div class="fields-section">
                         <h3>Поля</h3>
-                        {% for field_name, field_value in card.fields.items() %}
+                        {% for field_name, field_value in fields.items() %}
                         <div class="field">
                             <label for="{{ field_name }}">{{ field_name }}:</label>
                             <input type="text" id="{{ field_name }}" name="fields[{{ field_name }}]" value="{{ field_value }}">

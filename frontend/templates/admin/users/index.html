@@ -1,33 +1,107 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <title>Пользователи</title>
+    <title>Пользователи (Админ)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        table { border-collapse: collapse; }
-        th, td { border: 1px solid #ccc; padding: 4px 8px; }
-        .ok { color: green; }
-        .wait { color: orange; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            padding: 32px 24px;
+        }
+        h2 {
+            text-align: center;
+            color: #222;
+            margin-bottom: 32px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+        }
+        th, td {
+            padding: 12px 10px;
+            text-align: left;
+        }
+        th {
+            background: #f0f4f8;
+            color: #333;
+            font-weight: 600;
+        }
+        tr {
+            border-bottom: 1px solid #e0e6ed;
+        }
+        tr:last-child {
+            border-bottom: none;
+        }
+        .ok {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .wait {
+            color: #e67e22;
+            font-weight: bold;
+        }
+        .admin {
+            color: #007bff;
+            font-weight: bold;
+        }
+        .btn {
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 7px 18px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.2s;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 10px; }
+            table, thead, tbody, th, td, tr { display: block; }
+            th, td { padding: 8px 4px; }
+            tr { margin-bottom: 12px; }
+        }
     </style>
 </head>
 <body>
-    <h2>Пользователи</h2>
-    <table>
-        <tr><th>Логин</th><th>Одобрен</th><th>Админ</th><th>Действия</th></tr>
-        {% for user in users %}
-        <tr>
-            <td>{{ user.username }}</td>
-            <td>{% if user.is_approved %}<span class="ok">✔</span>{% else %}<span class="wait">⏳</span>{% endif %}</td>
-            <td>{% if user.is_admin %}<span class="ok">✔</span>{% else %}—{% endif %}</td>
-            <td>
-                {% if not user.is_approved %}
-                <form method="post" action="/admin/users/{{ user.id }}/approve" style="display:inline;">
-                    <button type="submit">Одобрить</button>
-                </form>
-                {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    <a href="/admin/cards">К карточкам</a>
+    <div class="container">
+        <h2>Пользователи</h2>
+        <table>
+            <tr>
+                <th>Email</th>
+                <th>Админ</th>
+                <th>Действия</th>
+            </tr>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.email }}</td>
+                <td>
+                    {% if user.is_admin %}
+                        <span class="admin">Да</span>
+                    {% else %}
+                        <span class="wait">Нет</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <!-- Здесь можно добавить действия, например, сделать админом -->
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <a href="/admin" class="btn" style="margin-top:24px;display:inline-block;">Назад в админку</a>
+    </div>
 </body>
 </html>

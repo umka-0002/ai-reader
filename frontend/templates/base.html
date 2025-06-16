@@ -268,12 +268,6 @@
                 <div class="user-dropdown">
                     <a href="/profile" class="dropdown-item">Профиль</a>
                     <a href="/settings" class="dropdown-item">Настройки</a>
-                    <a href="/notifications" class="dropdown-item">
-                        Уведомления
-                        {% if unread_notifications > 0 %}
-                        <span class="notification-badge">{{ unread_notifications }}</span>
-                        {% endif %}
-                    </a>
                     <div class="dropdown-divider"></div>
                     <a href="/logout" class="dropdown-item">Выйти</a>
                 </div>

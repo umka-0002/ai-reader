@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Карточка добавлена</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background: #f4f6f8;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .success-container {
+            max-width: 420px;
+            margin: 80px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            padding: 36px 30px;
+            text-align: center;
+        }
+        .success-icon {
+            font-size: 3.5rem;
+            color: #27ae60;
+            margin-bottom: 18px;
+        }
+        h2 {
+            color: #222;
+            margin-bottom: 18px;
+        }
+        .message {
+            color: #444;
+            font-size: 1.1em;
+            margin-bottom: 28px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1em;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="success-container">
+        <div class="success-icon">✔️</div>
+        <h2>Карточка успешно добавлена!</h2>
+        <div class="message">{{ message }}</div>
+        <a href="/search" class="btn">К списку карточек</a>
+        <a href="/upload" class="btn" style="background:#6c757d; margin-left:10px;">Загрузить ещё</a>
+    </div>
+</body>
+</html> 
