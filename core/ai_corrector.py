@@ -25,7 +25,7 @@ def correct_text(text):
     try:
         response = client.chat.completions.create(
             messages=[
-                {"role": "system", "content": "Ты полезный ассистент, исправляющий OCR ошибки."},
+                {"role": "system", "content": "Ты ассистент, исправляющий OCR ошибки."},
                 {"role": "user", "content": prompt}
             ],
             max_tokens=800,  # Параметр в Azure называется max_tokens, не max_completion_tokens
