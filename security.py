@@ -1,24 +1,23 @@
 from datetime import datetime, timedelta
 from typing import Optional
 from jose import JWTError, jwt
-from passlib.context import CryptContext
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 from config import get_settings
 from database import get_db
 from models import TokenData, User
+from core.auth_utils import hash_password, verify_user_password
 
 settings = get_settings()
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    return pwd_context.verify(plain_password, hashed_password)
+    return verify_user_password(plain_password, hashed_password)
 
 def get_password_hash(password: str) -> str:
-    return pwd_context.hash(password)
+    return hash_password(password)
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
     to_encode = data.copy()
@@ -66,4 +65,18 @@ def verify_admin(user: User) -> bool:
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Not enough permissions"
         )
-    return True 
+    return True
+
+# --- CSRF Protection
+from fastapi_csrf_protect import CsrfProtect
+from pydantic import BaseModel
+
+class CsrfSettings(BaseModel):
+    """CSRF protection settings."""
+    secret_key: str = settings.csrf_secret_key
+
+csrf = CsrfProtect()
+
+@csrf.load_config
+def get_csrf_config():
+    return CsrfSettings() 
